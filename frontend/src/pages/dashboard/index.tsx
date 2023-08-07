@@ -52,9 +52,11 @@ export function Dashboard() {
     return (
         <>
             <header>
-                <button type="button" onClick={openModal}></button>
+                <h1>Dashboard</h1>
+                <button type="button" onClick={openModal}>
+                    Add new contact
+                </button>
             </header>
-            <h1>Dashboard</h1>;
             <ul>
                 {contacts.map((contact) => (
                     <li key={contact.id}>
@@ -67,11 +69,14 @@ export function Dashboard() {
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Adicionar contato">
                 <h3>New contact</h3>
                 <form onSubmit={handleSubmit(submit)}>
+                    <button type="button" onClick={closeModal}>
+                        Close
+                    </button>
                     <label htmlFor="full_name">Full name</label>
                     <input type="text" id="full_name" {...register("full_name")} />
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" {...register("email")} />
-                    <label htmlFor="fone_number"></label>
+                    <label htmlFor="fone_number">Fone number</label>
                     <input type="text" id="fone_number" {...register("fone_number")} />
                     <button type="submit"></button>
                 </form>
