@@ -3,6 +3,7 @@ import { TLoginData } from "../pages/login/validation";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
+import { TRegisterData } from "../pages/register/validation";
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -11,6 +12,7 @@ interface AuthProviderProps {
 interface AuthContext {
     singIn(data: TLoginData): Promise<void>;
     loading: boolean;
+    registerUser(data: TRegisterData): Promise<void>;
 }
 
 export const AuthContext = createContext({} as AuthContext);
@@ -66,5 +68,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    return <AuthContext.Provider value={{ singIn, loading }}>{children}</AuthContext.Provider>;
+    async function registerUser(data: TRegisterData) {
+        const toastPromiseLogin = toast.loading("Login");
+
+        try {
+            await api.post("/user", data);
+            setLoading(false);
+            toast.update(toastPromiseLogin, {
+                render: "Success on register",
+                type: "success",
+                isLoading: false,
+                autoClose: 3000,
+                closeOnClick: true,
+            });
+            navigate("login");
+        } catch (error) {
+            console.error(error);
+            toast.update(toastPromiseLogin, {
+                render: "Error on register",
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+                closeOnClick: true,
+            });
+        }
+    }
+
+    return <AuthContext.Provider value={{ singIn, loading, registerUser }}>{children}</AuthContext.Provider>;
 }

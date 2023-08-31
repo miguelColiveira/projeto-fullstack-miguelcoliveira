@@ -47,6 +47,7 @@ export function Dashboard() {
 
     const submit: SubmitHandler<TContactReq> = (formData: TContactReq) => {
         createContact(formData);
+        closeModal();
     };
 
     return (
@@ -78,7 +79,7 @@ export function Dashboard() {
                     <input type="email" id="email" {...register("email")} />
                     <label htmlFor="fone_number">Fone number</label>
                     <input type="text" id="fone_number" {...register("fone_number")} />
-                    <button type="submit"></button>
+                    <button type="submit">Add contact</button>
                 </form>
             </Modal>
         </>
