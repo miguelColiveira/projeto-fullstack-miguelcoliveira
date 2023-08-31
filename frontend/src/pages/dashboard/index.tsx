@@ -35,7 +35,7 @@ export function Dashboard() {
         })();
     }, []);
 
-    const { register, handleSubmit } = useForm<TContactReq>({
+    const { register, handleSubmit, reset } = useForm<TContactReq>({
         resolver: zodResolver(contactsSchemaReq),
     });
 
@@ -47,6 +47,7 @@ export function Dashboard() {
 
     const submit: SubmitHandler<TContactReq> = (formData: TContactReq) => {
         createContact(formData);
+        reset();
         closeModal();
     };
 
